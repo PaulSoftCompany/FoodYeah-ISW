@@ -28,7 +28,7 @@ public class SwaggerConfig {
     public ApiInfo apiInfo() {
 
         return new ApiInfoBuilder()
-                .title("API de ejemplo")
+                .title("GAAAA")
                 .description("API de FoodYeah! de PaulSoft Company")
                 .version("1.0")
                 .contact(new Contact("Paulsoft Company", "", ""))

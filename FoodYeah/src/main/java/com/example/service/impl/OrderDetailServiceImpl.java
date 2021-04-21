@@ -1,23 +1,19 @@
 package com.example.service.impl;
 
+import java.util.List;
+
 import com.example.entity.OrderDetail;
 import com.example.repository.OrderDetailRepository;
 import com.example.service.OrderDetailService;
-import lombok.NoArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class OrderDetailServiceImpl implements OrderDetailService {
 
     @Autowired
-    public static OrderDetailRepository orderDetailRepository;
-
-    public OrderDetailServiceImpl(OrderDetailRepository orderDetailRepository) {
-        this.orderDetailRepository = orderDetailRepository;
-    }
+    public OrderDetailRepository orderDetailRepository;
 
     @Override
     public List<OrderDetail> findOrderDetailAll() {

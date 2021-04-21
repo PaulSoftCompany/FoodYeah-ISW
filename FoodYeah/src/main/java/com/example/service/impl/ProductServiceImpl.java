@@ -1,7 +1,8 @@
 package com.example.service.impl;
 
+import java.util.List;
+
 import com.example.entity.Product;
-import com.example.entity.ProductCategory;
 import com.example.repository.ProductRepository;
 import com.example.service.ProductService;
 
@@ -9,18 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
-import java.util.Date;
-import java.util.List;
-
 @Service
 public class ProductServiceImpl implements ProductService {
     @Autowired
-    public static ProductRepository productRepository;
-
-    public ProductServiceImpl(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
+    public ProductRepository productRepository;
 
     @Override
     public List<Product> findProductAll() {

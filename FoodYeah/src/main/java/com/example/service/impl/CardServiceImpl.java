@@ -1,15 +1,15 @@
 package com.example.service.impl;
 
+import java.util.List;
+
 import com.example.entity.Card;
 import com.example.entity.Customer;
 import com.example.repository.CardRepository;
 import com.example.repository.CustomerRepository;
 import com.example.service.CardService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class CardServiceImpl implements CardService {

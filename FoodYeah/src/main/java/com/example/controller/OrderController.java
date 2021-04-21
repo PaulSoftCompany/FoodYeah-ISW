@@ -1,8 +1,6 @@
 package com.example.controller;
 
-import com.example.entity.Card;
 import com.example.entity.Order;
-import com.example.service.CardService;
 import com.example.service.OrderService;
 import com.example.util.Message;
 import lombok.extern.slf4j.Slf4j;
@@ -82,10 +80,10 @@ public class OrderController {
             orderService.SetEndTime(order);
             orderService.DecreaseStock(order);
 
-            if (null == order) {
-                log.error("Order with id {} not found.", orderId);
-                return ResponseEntity.notFound().build();
-            }
+            // if (order == null) {
+            //     log.error("Order with id {} not found.", orderId);
+            //     return ResponseEntity.notFound().build();
+            // }
             return ResponseEntity.ok(order);
         } else {
             log.error("No hay suficiente dinero en la tarjeta para pagar la orden", orderId);

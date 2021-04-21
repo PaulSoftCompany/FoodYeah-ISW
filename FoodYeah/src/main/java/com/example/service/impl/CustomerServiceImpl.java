@@ -1,42 +1,33 @@
 package com.example.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.example.entity.Customer;
 import com.example.entity.CustomerCategory;
 import com.example.repository.CustomerRepository;
-import com.example.repository.OrderDetailRepository;
 import com.example.service.CustomerService;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
-public class CustomerServiceImpl implements CustomerService {
+public class CustomerServiceImpl implements CustomerService, UserDetailsService {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder encoder;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Customer customer = customerRepository.findOneByUsername(username);
-        if (customer == null) {
-            throw new UsernameNotFoundException(String.format("Usuario no existe", username));
-        }
-        // en spring security los roles tienen nombre de GrantedAuthority
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        customer.getCustomerRoles().forEach(role -> {
-            authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
-        });
-
-        UserDetails userDetails = new User(customer.getUsername(), customer.getPassword(), authorities);
-        return userDetails;
+        return new User("foo", "foo", new ArrayList<>());
     }
 
     @Override
@@ -63,16 +54,10 @@ public class CustomerServiceImpl implements CustomerService {
     @Transactional
     public Customer createCustomer(Customer customer) {
         Long UserRole;
-
-        if (customer.getUsername().startsWith("a")) {
-            UserRole = new Long(1);
-        } else {
-            UserRole = new Long(2);
-        }
+        UserRole = 1L;
 
         customer.setState("CREATED");
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        customer.setPassword(passwordEncoder.encode(customer.getPassword()));
+        customer.setPassword(encoder.encode(customer.getPassword()));
         Customer guardar = customerRepository.save(customer);
         customerRepository.assignRole(guardar.getId(), UserRole);
         return guardar;
