@@ -13,7 +13,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,9 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class CustomerServiceImpl implements CustomerService, UserDetailsService {
     @Autowired
     private CustomerRepository customerRepository;
-
-    @Autowired
-    private BCryptPasswordEncoder encoder;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -57,7 +53,7 @@ public class CustomerServiceImpl implements CustomerService, UserDetailsService 
         UserRole = 1L;
 
         customer.setState("CREATED");
-        customer.setPassword(encoder.encode(customer.getPassword()));
+        customer.setPassword(customer.getPassword());
         Customer guardar = customerRepository.save(customer);
         customerRepository.assignRole(guardar.getId(), UserRole);
         return guardar;
