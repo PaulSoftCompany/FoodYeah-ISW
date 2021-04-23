@@ -88,13 +88,12 @@ public class OrderServiceImpl implements OrderService {
         List<OrderDetail> orderDetails = order.getOrderDetails();
         for (OrderDetail orderDetail : orderDetails) {
             Product product = orderDetail.getProduct();
-            product.setStock((byte) (orderDetail.getProduct().getStock() - orderDetail.getQuantity()));
+            product.setStock(orderDetail.getProduct().getStock() - orderDetail.getQuantity());
             productRepository.save(product);
         }
     }
 
     public String GetAverageTime() {
-        String s = "00:00:00";
         Long averageTime = 0L;
         int quant = 0;
         for (Order order : orderRepository.findAll()) {
