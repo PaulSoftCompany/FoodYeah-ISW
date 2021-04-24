@@ -28,6 +28,12 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 public class OrderServiceTest {
+    /**
+     * --Creacion de los datos de prueba para la orden--
+     */
+    /**
+     * Creacion de la OrderDetail de la orden
+     */
     private static final OrderDetail ORDER_DETAIL = new OrderDetail();
     private static final Long OD_ID = 1L;
     private static final Byte OD_QUANTITY = 69;
@@ -35,21 +41,33 @@ public class OrderServiceTest {
     private static final Float OD_TOTAL_PRICE = 69F * 420F;
     private static final String OD_STATE = "CREATED";
 
+    /**
+     * Creacion de la orden
+     */
     private static final Order ORDER = new Order();
     private static final Long ORDER_ID = 1L;
+    //la orden tiene un cliente
     private static final Customer CUSTOMER = new Customer();
+    //La orden tiene un detalle de OrderDetails
     private static final List<OrderDetail> ORDER_DETAILS = Arrays.asList(ORDER_DETAIL);
+    //Datos de la orden:
     private static final String DATE = "04-20-6969";
     private static final String INIT_TIME = "00:00:00";
     private static final String END_TIME = "00:04:20";
     private static final Float TOTAL_PRICE = 69F * 420F;
     private static final String STATE = "CREATED";
-
+    /**
+     * Creacion del product de la OrderDetail
+     * En este caso el product no tiene product_category
+     */
     private static final Product PRODUCT = new Product();
     private static final Long PRODUCT_ID = 1L;
     private static final Float PRODUCT_PRICE = 420F;
     private static final Integer STOCK = 420;
-
+    /**
+     * Creación de la tarjeta del cliente
+     * con esta tarjeta se valida el saldo y se paga la orden
+     */
     private static final Card CARD = new Card();
     private static final Long CARD_ID = 1L;
     private static final Float CARD_MONEY = 69F * 420F;
