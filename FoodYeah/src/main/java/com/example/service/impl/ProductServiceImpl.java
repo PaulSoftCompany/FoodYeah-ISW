@@ -34,7 +34,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> findBySellday(int Sellday) {
-        return productRepository.findBySellDay(Sellday);
+        return productRepository.findBySellday(Sellday);
     }
 
     @Override
