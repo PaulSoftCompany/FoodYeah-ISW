@@ -32,7 +32,9 @@ public class ProductCategoryServiceTest {
     private static final Long PRODUCT_CATEGORYID = 1L;
     private static final String PRODUCT_CATEGORYNAME = "CategoriaNombre";
     private static final String PRODUCT_CATEGORYDESCRIPTION = "CategoriaDescripcion";
-
+    private static final String STATE_CREATED = "CREATED";
+    private static final String STATE_UPDATED = "UPDATED";
+    private static final String STATE_DELETED = "DELETED";
 
     @Before
     public void init() throws Exception{
@@ -43,34 +45,73 @@ public class ProductCategoryServiceTest {
     }
 
     @Test
-    public void findProduct_CategoryAllTest() throws Exception {
+    public void findProduct_CategoryAll() throws Exception {
+        String methodName = new Object() {}
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
         Mockito.when(productCategoryRepository.findAll()).thenReturn(Arrays.asList(PRODUCT_CATEGORY));
         List<ProductCategory> response = productCategoryServiceServiceImpl.findProduct_CategoryAll();
-        assertNotNull(response);
-        assertFalse(response.isEmpty());
-        assertEquals(response.size(), 1);
+
+        Util.assertNotNull(methodName + " - NULL TEST",response);
+        Util.assertFalse(methodName + " - EMPTY TEST",response.isEmpty());
+        Util.assertEquals(methodName + " - SIZE TEST",response.size(),1);
     }
 
     @Test
-    public void getProduct_CategoryTest() throws Exception {
+    public void getProduct_Category() throws Exception {
+        String methodName = new Object() {}
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
         Mockito.when(productCategoryRepository.findById(PRODUCT_CATEGORYID)).thenReturn(Optional.of(PRODUCT_CATEGORY));
-        ProductCategory Response = productCategoryServiceServiceImpl.getProduct_Category(PRODUCT_CATEGORYID);
+        ProductCategory response = productCategoryServiceServiceImpl.getProduct_Category(PRODUCT_CATEGORYID);
+
+        Util.assertNotNull(methodName + " - NULL TEST", response);
+        Util.assertEquals(methodName + " - MATCH ID",response.getId(), PRODUCT_CATEGORYID);
     }
 
     @Test
-    public void createProduct_CategoryTest() throws Exception {
+    public void createProduct_Category() throws Exception {
+        String methodName = new Object() {}
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
         Mockito.when(productCategoryRepository.save(Mockito.any(ProductCategory.class))).thenReturn(PRODUCT_CATEGORY);
-        productCategoryServiceServiceImpl.createProduct_Category(PRODUCT_CATEGORY);
+        ProductCategory response = productCategoryServiceServiceImpl.createProduct_Category(PRODUCT_CATEGORY);
+
+        Util.assertNotNull(methodName + " - NULL TEST", response);
+        Util.assertEquals(methodName + " - MATCH STATE",response.getState(), STATE_CREATED);
     }
 
     @Test
     public void deleteProductTest() throws  Exception{
+        String methodName = new Object() {}
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
         Mockito.when(productCategoryRepository.findById(PRODUCT_CATEGORYID)).thenReturn(Optional.of(PRODUCT_CATEGORY));
-        productCategoryServiceServiceImpl.deleteProduct_Category(PRODUCT_CATEGORYID);
+        Mockito.when(productCategoryRepository.save(Mockito.any(ProductCategory.class))).thenReturn(PRODUCT_CATEGORY);
+        ProductCategory response = productCategoryServiceServiceImpl.deleteProduct_Category(PRODUCT_CATEGORYID);
+
+        Util.assertNotNull(methodName + " - NULL TEST", response);
+        Util.assertEquals(methodName + " - MATCH STATE",response.getState(), STATE_DELETED);
     }
     @Test
     public void updateProductTest() throws  Exception{
-        ProductCategory edit = PRODUCT_CATEGORY;
-        ProductCategory response = productCategoryServiceServiceImpl.updateProduct_Category(edit);
+        String methodName = new Object() {}
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+        Mockito.when(productCategoryRepository.findById(PRODUCT_CATEGORYID)).thenReturn(Optional.of(PRODUCT_CATEGORY));
+        Mockito.when(productCategoryRepository.save(Mockito.any(ProductCategory.class))).thenReturn(PRODUCT_CATEGORY);
+        ProductCategory response = productCategoryServiceServiceImpl.updateProduct_Category(PRODUCT_CATEGORY);
+
+        Util.assertNotNull(methodName + " - NULL TEST", response);
+        Util.assertEquals(methodName + " - MATCH STATE",response.getState(), STATE_UPDATED);
     }
 }

@@ -71,7 +71,8 @@ public class OrderServiceTest {
     private static final Card CARD = new Card();
     private static final Long CARD_ID = 1L;
     private static final Float CARD_MONEY = 69F * 420F;
-    
+    private static final String STATE_CREATED = "CREATED";
+    private static final String STATE_DELIVERED = "DELIVERED";
     @InjectMocks
     OrderServiceImpl orderServiceImpl;
 
@@ -116,53 +117,98 @@ public class OrderServiceTest {
     }
 
     @Test
-    public void findOrderAllTest() throws Exception {
+    public void findOrderAll() throws Exception {
+        String methodName = new Object() {}
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
         Mockito.when(orderRepository.findAll()).thenReturn(Arrays.asList(ORDER));
         List<Order> response = orderServiceImpl.findOrderAll();
-        assertNotNull(response);
-        assertFalse(response.isEmpty());
-        assertEquals(response.size(), 1);
+
+        Util.assertNotNull(methodName + " - NULL TEST",response);
+        Util.assertFalse(methodName + " - EMPTY TEST",response.isEmpty());
+        Util.assertEquals(methodName + " - SIZE TEST",response.size(),1);
     }
 
     @Test
-    public void getOrderTest() throws Exception {
+    public void getOrder() throws Exception {
+        String methodName = new Object() {}
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
         Mockito.when(orderRepository.findById(ORDER_ID)).thenReturn(Optional.of(ORDER));
-        orderServiceImpl.getOrder(ORDER_ID);
+        Order response = orderServiceImpl.getOrder(ORDER_ID);
+
+        Util.assertNotNull(methodName + " - NULL TEST", response);
+        Util.assertEquals(methodName + " - MATCH ID",response.getId(), ORDER_ID);
     }
 
     @Test
-    public void createOrderTest() throws Exception {
+    public void createOrder() throws Exception {
+        String methodName = new Object() {}
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
         Mockito.when(productRepository.getOne(PRODUCT_ID)).thenReturn(PRODUCT);
         Mockito.when(orderRepository.save(Mockito.any(Order.class))).thenReturn(ORDER);
-        orderServiceImpl.createOrder(ORDER);
+        Order response = orderServiceImpl.createOrder(ORDER);
+
+        Util.assertNotNull(methodName + " - NULL TEST", response);
+        Util.assertEquals(methodName + " - MATCH STATE",response.getState(), STATE_CREATED);
     }
 
     @Test
-    public void SetEndTimeTest() throws Exception {
+    public void SetEndTime() throws Exception {
+        String methodName = new Object() {}
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
+        Mockito.when(orderRepository.save(Mockito.any(Order.class))).thenReturn(ORDER);
         orderServiceImpl.SetEndTime(ORDER);
-        assertEquals(ORDER.getState(), "DELIVERED");
+
+        Util.assertEquals(methodName + " - MATCH STATE",ORDER.getState(), STATE_DELIVERED);
     }
 
     @Test
-    public void DecreaseStockTest() throws Exception {
+    public void DecreaseStock() throws Exception {
+        String methodName = new Object() {}
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
         orderServiceImpl.DecreaseStock(ORDER);
-        assertEquals(ORDER.getOrderDetails().get(0).getProduct().getStock(), 351);
+        Util.assertEquals(methodName + " - MATCH STOCK",ORDER.getOrderDetails().get(0).getProduct().getStock(), 351);
     }
 
     @Test
-    public void GetAverageTimeTest() throws Exception {
+    public void GetAverageTime() throws Exception {
+        String methodName = new Object() {}
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
         Mockito.when(orderRepository.findAll()).thenReturn(Arrays.asList(ORDER));
         String response = orderServiceImpl.GetAverageTime();
-        assertEquals(response, "4");
+
+        Util.assertEquals(methodName + " - MATCH AVERAGE TIME",response, "4");
     }
 
     @Test
-    public void DecreaseCostumerMoneyTest() throws Exception {
+    public void DecreaseCostumerMoney() throws Exception {
+        String methodName = new Object() {}
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
         Mockito.when(cardRepository.getOne(CARD_ID)).thenReturn(CARD);
         Mockito.when(orderRepository.findById(ORDER_ID)).thenReturn(Optional.of(ORDER));
 
         Boolean response = orderServiceImpl.DecreaseCostumerMoney(CARD_ID, ORDER_ID);
-        assertEquals(CARD.getCardMoney(), 0F, 0F);
-        assertEquals(response, true);
+        Util.assertEquals(methodName + " - MATCH CARD MONEY",CARD.getCardMoney(), 0F);
+        Util.assertEquals(methodName + " - VALIDATE CONSUMPTION",response,true);
     }
 }

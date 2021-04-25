@@ -1,5 +1,6 @@
 package com.example.ServiceUnitTests;
 
+import com.example.entity.Customer;
 import com.example.entity.Order;
 import com.example.entity.Product;
 import com.example.repository.OrderRepository;
@@ -19,17 +20,15 @@ import java.util.Optional;
 import static org.junit.Assert.*;
 
 public class ProductServiceTest {
-
-
-
-    /* Creacion del producto
-  */
     private static final Product PRODUCT = new Product();
     private static final Long PRODUCT_ID = 1L;
     private static final Float PRODUCT_PRICE = 420F;
     private static final Integer STOCK = 420;
     private static final Byte SELLDAY = 1;
 
+    private static final String STATE_CREATED = "CREATED";
+    private static final String STATE_UPDATED = "UPDATED";
+    private static final String STATE_DELETED = "DELETE";
     @InjectMocks
     ProductServiceImpl productServiceImpl;
 
@@ -46,53 +45,107 @@ public class ProductServiceTest {
         PRODUCT.setState("CREATED");
     }
 
-
     @Test
-    public void findProductAllTest() throws Exception {
+    public void findProductAll() throws Exception {
+        String methodName = new Object() {}
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
         Mockito.when(productRepository.findAll()).thenReturn(Arrays.asList(PRODUCT));
         List<Product> response = productServiceImpl.findProductAll();
-        assertNotNull(response);
-        assertFalse(response.isEmpty());
-        assertEquals(response.size(), 1);
+
+        Util.assertNotNull(methodName + " - NULL TEST",response);
+        Util.assertFalse(methodName + " - EMPTY TEST",response.isEmpty());
+        Util.assertEquals(methodName + " - SIZE TEST",response.size(),1);
     }
 
     @Test
-    public void getProductTest() throws Exception {
+    public void getProduct() throws Exception {
+        String methodName = new Object() {}
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
         Mockito.when(productRepository.findById(PRODUCT_ID)).thenReturn(Optional.of(PRODUCT));
-        Product Response = productServiceImpl.getProduct(PRODUCT_ID);
+        Product response = productServiceImpl.getProduct(PRODUCT_ID);
+
+        Util.assertNotNull(methodName + " - NULL TEST", response);
+        Util.assertEquals(methodName + " - MATCH ID",response.getId(), PRODUCT_ID);
     }
 
     @Test
-    public void createProductTest() throws Exception {
+    public void createProduct() throws Exception {
+        String methodName = new Object() {}
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
         Mockito.when(productRepository.save(Mockito.any(Product.class))).thenReturn(PRODUCT);
-        productServiceImpl.createProduct(PRODUCT);
+        Product response = productServiceImpl.createProduct(PRODUCT);
+
+        Util.assertNotNull(methodName + " - NULL TEST",response);
+        Util.assertEquals(methodName + " - MATCH STATE TEST",response.getState(),STATE_CREATED);
     }
     @Test
-    public void findProductBySellDayTest() throws Exception {
+    public void findProductBySellDay() throws Exception {
+        String methodName = new Object() {}
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
         Mockito.when(productRepository.findBySellday(SELLDAY)).thenReturn(Arrays.asList(PRODUCT));
         List<Product> response = productServiceImpl.findBySellday(SELLDAY);
-        assertNotNull(response);
-        assertFalse(response.isEmpty());
-        assertEquals(response.size(), 1);
+
+        Util.assertNotNull(methodName + " - NULL TEST",response);
+        Util.assertFalse(methodName + " - EMPTY TEST",response.isEmpty());
+        Util.assertEquals(methodName + " - SIZE TEST",response.size(),1);
     }
 
     @Test
-    public void findMenuSemanalTest() throws  Exception{
+    public void findMenuSemanal() throws  Exception{
+        String methodName = new Object() {}
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
         Mockito.when(productRepository.menuSemanal()).thenReturn(Arrays.asList(PRODUCT));
         List<Product> response = productServiceImpl.menuSemanal();
-        assertNotNull(response);
-        assertFalse(response.isEmpty());
-        assertEquals(response.size(), 1);
+
+        Util.assertNotNull(methodName + " - NULL TEST",response);
+        Util.assertFalse(methodName + " - EMPTY TEST",response.isEmpty());
+        Util.assertEquals(methodName + " - SIZE TEST",response.size(),1);
     }
 
     @Test
-    public void deleteProductTest() throws  Exception{
+    public void deleteProduct() throws  Exception{
+        String methodName = new Object() {}
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
+        Mockito.when(productRepository.save(Mockito.any(Product.class)))
+                .thenReturn(PRODUCT);
         Mockito.when(productRepository.findById(PRODUCT_ID)).thenReturn(Optional.of(PRODUCT));
-        productServiceImpl.deleteProduct(PRODUCT_ID);
+        Product response = productServiceImpl.deleteProduct(PRODUCT_ID);
+
+        Util.assertNotNull(methodName + " - NULL TEST",response);
+        Util.assertEquals(methodName + " - MATCH STATE TEST",response.getState(),STATE_DELETED);
     }
     @Test
-    public void updateProductTest() throws  Exception{
-        Product edit = PRODUCT;
-        Product response = productServiceImpl.updateProduct(edit);
+    public void updateProduct() throws  Exception{
+        String methodName = new Object() {}
+                .getClass()
+                .getEnclosingMethod()
+                .getName();
+
+        Mockito.when(productRepository.save(Mockito.any(Product.class)))
+                .thenReturn(PRODUCT);
+        Mockito.when(productRepository.findById(PRODUCT_ID))
+                .thenReturn(Optional.of(PRODUCT));
+        Product response = productServiceImpl.updateProduct(PRODUCT);
+
+        Util.assertNotNull(methodName + " - NULL TEST",response);
+        Util.assertEquals(methodName + " - MATCH STATE TEST",response.getState(),STATE_UPDATED);
     }
 }
