@@ -5,8 +5,9 @@ import io.cucumber.java.en.When;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 public class EjemploPete {
-        private int stock;
-        private int initialStock;
+    private int stock;
+    private int initialStock;
+
     @Given("I have {int} beer cans")
     public void iHaveOpeningBalanceBeerCans(int initialStock) {
             this.initialStock = initialStock;
@@ -14,7 +15,7 @@ public class EjemploPete {
 
     @When("I have drunk {int} beer cans")
     public void iHaveDrunkProcessedBeerCans(int processed) {
-            this.stock = this.initialStock;
+            this.stock = this.initialStock - processed;
     }
 
     @When("I go to my fridge")
