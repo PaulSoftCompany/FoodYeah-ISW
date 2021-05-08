@@ -76,7 +76,7 @@ public class OrderServiceImpl implements OrderService {
         List<OrderDetail> orderDetails = order.getOrderDetails();
         for (OrderDetail orderDetail : orderDetails) {
             Product product = orderDetail.getProduct();
-            product.setStock((byte) (orderDetail.getProduct().getStock() - orderDetail.getQuantity()));
+            product.setStock(orderDetail.getProduct().getStock() - orderDetail.getQuantity());
             productRepository.save(product);
         }
     }
