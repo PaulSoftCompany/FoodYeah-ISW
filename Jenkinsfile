@@ -33,13 +33,13 @@ pipeline {
             }
         }
 
-        stage('Deploy Tomcat') {
-            steps {
-                echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL} direcion ${env.WORKSPACE}"  
-                withMaven(maven : 'MAVEN_3_8_1') {
-                    bat '"C:\\Program Files\\Git\\mingw64\\bin\\curl.exe" -T ".\\target\\demo-1.0.jar" "http://tomcat:tomcat@localhost:9090/manager/text/deploy?path=/classes&update=true"'
-                } 
-            }
-        }
+        // stage('Deploy Tomcat') {
+        //     steps {
+        //         echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL} direcion ${env.WORKSPACE}"  
+        //         withMaven(maven : 'MAVEN_3_8_1') {
+        //             bat '"C:\\Program Files\\Git\\mingw64\\bin\\curl.exe" -T ".\\target\\demo-1.0.jar" "http://tomcat:tomcat@localhost:9090/manager/text/deploy?path=/classes&update=true"'
+        //         } 
+        //     }
+        // }
     }
 }
