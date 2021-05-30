@@ -1,8 +1,8 @@
 package com.paulsoft.foodyeah.services;
 
-import com.paulsoft.foodyeah.dtos.CreateProductDto;
-import com.paulsoft.foodyeah.dtos.ProductDto;
-import com.paulsoft.foodyeah.dtos.UpdateProductDto;
+import com.paulsoft.foodyeah.dtos.ProductDto.CreateProductDto;
+import com.paulsoft.foodyeah.dtos.ProductDto.ProductDto;
+import com.paulsoft.foodyeah.dtos.ProductDto.UpdateProductDto;
 import com.paulsoft.foodyeah.exceptions.ResourceException;
 
 import java.text.ParseException;

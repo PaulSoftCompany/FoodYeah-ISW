@@ -1,4 +1,4 @@
-package com.paulsoft.foodyeah.dtos;
+package com.paulsoft.foodyeah.dtos.ProductDto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +10,5 @@ public class CreateProductDto {
     private Double productPrice;
     private byte sellDay;
     private String imageUrl;
-    private String[] ingredients;
     private Long productCategoryId;
 }

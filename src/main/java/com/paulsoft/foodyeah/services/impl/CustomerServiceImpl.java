@@ -1,10 +1,10 @@
 package com.paulsoft.foodyeah.services.impl;
 
-import com.paulsoft.foodyeah.dtos.UpdateCustomerDto;
+import com.paulsoft.foodyeah.dtos.CustomerDto.UpdateCustomerDto;
 import com.paulsoft.foodyeah.exceptions.NotFoundException;
 import com.paulsoft.foodyeah.exceptions.ResourceException;
-import com.paulsoft.foodyeah.dtos.CreateCustomerDto;
-import com.paulsoft.foodyeah.dtos.CustomerDto;
+import com.paulsoft.foodyeah.dtos.CustomerDto.CreateCustomerDto;
+import com.paulsoft.foodyeah.dtos.CustomerDto.CustomerDto;
 import com.paulsoft.foodyeah.entities.Customer;
 import com.paulsoft.foodyeah.repositories.CustomerRepository;
 import com.paulsoft.foodyeah.services.CustomerService;

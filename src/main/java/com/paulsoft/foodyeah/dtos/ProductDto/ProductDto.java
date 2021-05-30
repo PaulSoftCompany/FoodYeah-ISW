@@ -1,5 +1,6 @@
-package com.paulsoft.foodyeah.dtos;
+package com.paulsoft.foodyeah.dtos.ProductDto;
 
+import com.paulsoft.foodyeah.dtos.ProductCategoryDto.ProductCategoryDto;
 import com.paulsoft.foodyeah.entities.ProductCategory;
 
 import javax.persistence.Column;
@@ -14,6 +15,6 @@ public class ProductDto {
     private String[] ingredients;
     private Boolean state;
     private Date createdAt;
-    //private ProductCategoryDto productCategory;
+    private ProductCategoryDto productCategory;
 
 }
