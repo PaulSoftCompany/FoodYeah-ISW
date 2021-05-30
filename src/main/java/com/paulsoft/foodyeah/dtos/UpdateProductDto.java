@@ -10,6 +10,5 @@ public class UpdateProductDto {
     private Double productPrice;
     private byte sellDay;
     private String imageUrl;
-    private String[] ingredients;
     private Long productCategoryId;
 }

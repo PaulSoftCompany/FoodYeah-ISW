@@ -20,6 +20,8 @@ public class ProductCategory {
 
     private Date createdAt;
 
+    private Boolean state;
+
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "productCategory")
     private List<Product> products;
 }

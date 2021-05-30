@@ -27,8 +27,6 @@ public class Product {
     @Column(name = "image_url",nullable = false)
     private String imageUrl;
 
-    private String[] ingredients;
-
     private Boolean state;
 
     @Column(name ="created_at")
