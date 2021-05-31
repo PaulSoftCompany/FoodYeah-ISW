@@ -41,7 +41,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
     @Override
     @Transactional
-    public ProductCategoryDto updateProductCategory(UpdateProductCategoryDto updateProductCategoryDto, Long id) throws ResourceException, ParseException {
+    public ProductCategoryDto updateProductCategory(UpdateProductCategoryDto updateProductCategoryDto, Long id) throws ResourceException {
         ProductCategory productCategory = productCategoryRepository.findById(id)
                         .orElseThrow(()-> new NotFoundException("NOT_FOUND","NOT_FOUND"));
         productCategory.setName(updateProductCategoryDto.getName());
@@ -53,7 +53,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     @Transactional
     public ProductCategoryDto createProductCategory(CreateProductCategoryDto createProductCategoryDto) throws ResourceException,ParseException {
         ProductCategory productCategory = convertToEntity(createProductCategoryDto);
-        if(productCategoryRepository.findById(productCategory.getId()).isPresent()){
+        if(productCategoryRepository.findByName(productCategory.getName()).isPresent()){
             throw new NotFoundException("PRODUCT_CATEGORY_EXISTS","PRODUCT_CATEGORY_EXISTS");
         }
         productCategory.setState(true);
