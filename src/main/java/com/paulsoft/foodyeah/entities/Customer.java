@@ -32,10 +32,7 @@ public class Customer{
     @Column(name ="created_at")
     private Date createdAt;
 
-    @ManyToMany
-    @JoinTable(name = "card_registered",
-            joinColumns = @JoinColumn(name = "customer_id"),
-            inverseJoinColumns = @JoinColumn(name = "card_id"))
+    @ManyToOne
     List<Card> registeredCards;
 
 }

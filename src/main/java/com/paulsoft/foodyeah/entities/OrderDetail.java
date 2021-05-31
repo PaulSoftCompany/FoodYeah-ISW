@@ -3,6 +3,7 @@ package com.paulsoft.foodyeah.entities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Data
@@ -12,13 +13,18 @@ public class OrderDetail {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    private byte quantity;
+    private Byte quantity;
 
     @Column(name ="unit_price")
     private Double unitPrice;
 
     @Column(name ="total_price")
     private Double totalPrice;
+
+    private Boolean state;
+
+    @Column(name = "created_at")
+    private Date createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id",nullable = false)
