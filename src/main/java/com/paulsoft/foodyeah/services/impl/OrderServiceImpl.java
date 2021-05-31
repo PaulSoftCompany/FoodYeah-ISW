@@ -9,7 +9,9 @@ import com.paulsoft.foodyeah.entities.*;
 import com.paulsoft.foodyeah.exceptions.NotFoundException;
 import com.paulsoft.foodyeah.exceptions.ResourceException;
 import com.paulsoft.foodyeah.repositories.CardRepository;
+import com.paulsoft.foodyeah.repositories.OrderDetailRepository;
 import com.paulsoft.foodyeah.repositories.OrderRepository;
+import com.paulsoft.foodyeah.repositories.ProductRepository;
 import com.paulsoft.foodyeah.services.OrderService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +31,12 @@ public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepository;
 
     @Autowired
+    private OrderDetailRepository orderDetailRepository;
+    @Autowired
     private CardRepository cardRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
 
     public static final ModelMapper modelMapper=new ModelMapper();
 
@@ -48,13 +55,33 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderDto createOrder(CreateOrderDto createOrderDto) throws ResourceException, ParseException {
         Order order = convertToEntity(createOrderDto);
-        order.setTotalPrice(0.0);
-        order.setDate(new Date());
-        //TODO: Revisar si el tiempo esta bien asigando
+        PrepareDetail(order);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = formatter.parse(formatter.format(new Date()));
+        order.setDate(date);
+        order.setTotalPrice(OrderTotalPrice(order));
         return convertToResource(orderRepository.save(order));
-
     }
 
+    private void PrepareDetail(Order order) throws ResourceException {
+        List<OrderDetail> _orderDetails = order.getProducts();
+        for (OrderDetail orderDetail : _orderDetails) {
+            Product product = productRepository.findById(orderDetail.getProduct().getId())
+                    .orElseThrow(()->new NotFoundException("NOT_FOUND","NOT_FOUND"));
+            orderDetail.setUnitPrice(product.getProductPrice());
+            orderDetail.setTotalPrice(orderDetail.getUnitPrice() * orderDetail.getQuantity());
+            orderDetailRepository.save(orderDetail);
+        }
+    }
+
+    private Double OrderTotalPrice(Order order) {
+        Double TotalPrice = 0.0;
+        List<OrderDetail> _orderDetails = order.getProducts();
+        for (OrderDetail orderDetail : _orderDetails) {
+            TotalPrice += orderDetail.getTotalPrice();
+        }
+        return TotalPrice;
+    }
     /*
     @Override
     public void SetEndTime(UpdateOrderDto order) throws ResourceException {
@@ -75,14 +102,6 @@ public class OrderServiceImpl implements OrderService {
     public boolean DecreaseCostumerMoney(long cardId, long orderId) throws ResourceException {
     }*/
 
-    private float OrderTotalPrice(Order order) {
-        float TotalPrice = 0;
-        List<OrderDetail> _orderDetails = order.getProducts();
-        for (OrderDetail orderDetail : _orderDetails) {
-            TotalPrice += orderDetail.getTotalPrice();
-        }
-        return TotalPrice;
-    }
 
     private Order convertToEntity(CreateOrderDto resource){return  modelMapper.map(resource, Order.class);}
 
