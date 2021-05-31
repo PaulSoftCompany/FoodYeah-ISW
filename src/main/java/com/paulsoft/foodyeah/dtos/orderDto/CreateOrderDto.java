@@ -1,4 +1,5 @@
 package com.paulsoft.foodyeah.dtos.orderDto;
+import com.paulsoft.foodyeah.dtos.OrderDetailDto.OrderDetailDto;
 import com.paulsoft.foodyeah.entities.OrderDetail;
 
 import java.util.Date;
