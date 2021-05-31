@@ -1,6 +1,7 @@
 package com.paulsoft.foodyeah.dtos.CustomerDto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.paulsoft.foodyeah.dtos.orderDto.OrderDto;
 import com.paulsoft.foodyeah.entities.Card;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +20,6 @@ public class CustomerDto {
     //fijarnos lo del password
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date createdAt;
-
+    List<OrderDto> orders;
     //List<Card> registeredCards;
 }

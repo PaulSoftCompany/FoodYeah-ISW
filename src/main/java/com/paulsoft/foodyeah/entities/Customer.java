@@ -35,4 +35,7 @@ public class Customer{
 //    @ManyToOne
 //    List<Card> registeredCards;
 
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "customer")
+    private List<Order> orders;
+
 }

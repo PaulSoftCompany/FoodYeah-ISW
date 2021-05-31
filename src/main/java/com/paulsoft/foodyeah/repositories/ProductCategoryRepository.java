@@ -9,7 +9,6 @@ import java.util.Optional;
 
 @Repository
 public interface ProductCategoryRepository extends JpaRepository<ProductCategory,Long> {
-    //TODO
     Optional<ProductCategory> findByName(String name);
     Optional<List<ProductCategory>> findAllByState(Boolean state);
 

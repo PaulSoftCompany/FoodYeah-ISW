@@ -10,10 +10,8 @@ import java.util.List;
 
 public interface OrderService {
     List<OrderDto> getOrders() throws ResourceException;
+    List<OrderDto> getOrdersByCustomerId(Long id) throws ResourceException;
     OrderDto getOrderById(Long id) throws ResourceException;
     OrderDto createOrder(CreateOrderDto createOrderDto) throws ResourceException, ParseException;
-    /*void SetEndTime(UpdateOrderDto order) throws ResourceException;
-    void DecreaseStock(OrderDto orderDto) throws ResourceException;
-    String GetAverageTime() throws ResourceException;
-    boolean DecreaseCostumerMoney(long cardId, long orderId) throws ResourceException;*/
+
 }

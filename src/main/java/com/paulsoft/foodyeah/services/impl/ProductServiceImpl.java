@@ -87,15 +87,28 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public ProductDto updateProduct(UpdateProductDto updateProductDto, Long id) throws ResourceException {
-        return null;
-        //TODO
+        if(productRepository.findByName(updateProductDto.getName()).isPresent()){
+            throw new NotFoundException("PRODUCT_EXISTS","PRODUCT_EXISTS");
+        }
+        Product product = productRepository.findById(id)
+                .orElseThrow(()->new NotFoundException("NOT_FOUND","NOT_FOUND"));
+        product.setName(updateProductDto.getName());
+        product.setProductPrice(updateProductDto.getProductPrice());
+        product.setSellDay(updateProductDto.getSellDay());
+        product.setImageUrl(updateProductDto.getImageUrl());
+        product.setProductCategory(productCategoryRepository.findById(updateProductDto.getProductCategoryId())
+                .orElseThrow(()->new NotFoundException("NOT_FOUND","NOT_FOUND")));
+        return convertToResource(productRepository.save(product));
     }
 
     @Override
     @Transactional
     public String deleteProduct(Long id) throws ResourceException {
-        return null;
-        //TODO
+        Product product = productRepository.findById(id)
+                .orElseThrow(()->new NotFoundException("NOT_FOUND","NOT_FOUND"));
+        product.setState(false);
+        productRepository.save(product);
+        return product.getName();
     }
 
 

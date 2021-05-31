@@ -15,4 +15,5 @@ public class OrderDto {
     private Date date;
     private Double totalPrice;
     private List<OrderDetailDto> details;
+    private Long customerId;
 }

@@ -12,4 +12,5 @@ import java.util.List;
 @Setter
 public class CreateOrderDto {
     private List<CreateOrderDetailDto> details;
+    private Long customerId;
 }

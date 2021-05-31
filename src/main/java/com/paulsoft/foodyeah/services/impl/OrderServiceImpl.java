@@ -8,14 +8,12 @@ import com.paulsoft.foodyeah.dtos.orderDto.OrderDto;
 import com.paulsoft.foodyeah.entities.*;
 import com.paulsoft.foodyeah.exceptions.NotFoundException;
 import com.paulsoft.foodyeah.exceptions.ResourceException;
-import com.paulsoft.foodyeah.repositories.CardRepository;
-import com.paulsoft.foodyeah.repositories.OrderDetailRepository;
-import com.paulsoft.foodyeah.repositories.OrderRepository;
-import com.paulsoft.foodyeah.repositories.ProductRepository;
+import com.paulsoft.foodyeah.repositories.*;
 import com.paulsoft.foodyeah.services.OrderService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,7 +32,7 @@ public class OrderServiceImpl implements OrderService {
     private OrderDetailRepository orderDetailRepository;
 
     @Autowired
-    private CardRepository cardRepository;
+    private CustomerRepository customerRepository;
 
     @Autowired
     private ProductRepository productRepository;
@@ -44,8 +42,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderDto> getOrders() throws ResourceException {
         return convertToResources(orderRepository.findAll());
-//        return orderRepository.findAll()
-//                .stream().map(this::convertToResource).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderDto> getOrdersByCustomerId(Long id) throws ResourceException {
+        return convertToResources(orderRepository.findAllByCustomerId(id));
     }
 
     @Override
@@ -55,12 +56,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Transactional
     public OrderDto createOrder(CreateOrderDto createOrderDto) throws ResourceException, ParseException {
+        Customer customer = customerRepository.findById(createOrderDto.getCustomerId())
+                .orElseThrow(()->new NotFoundException("NOT_FOUND","NOT_FOUND"));
         Order order = new Order();
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date date = formatter.parse(formatter.format(new Date()));
         order.setDate(date);
         order.setTotalPrice(0d);
+        order.setCustomer(customer);
         orderRepository.save(order);
         Double total = 0d;
         List<CreateOrderDetailDto> orderDetails = createOrderDto.getDetails();
