@@ -25,7 +25,7 @@ public class ProductController {
     ProductService productService;
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping
+    @GetMapping()
     public ResourceResponse<List<ProductDto>> getProducts() throws ResourceException {
         return new ResourceResponse<>("Success", String.valueOf(HttpStatus.OK),"OK"
                 ,productService.getProducts());
@@ -65,7 +65,7 @@ public class ProductController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping
+    @PostMapping()
     public ResourceResponse<ProductDto> createProduct(@RequestBody @Valid CreateProductDto createProductDto ) throws ResourceException, ParseException {
         return new ResourceResponse<>("Success",String.valueOf(HttpStatus.OK),"OK",
                 productService.createProduct(createProductDto));

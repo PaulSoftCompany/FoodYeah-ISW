@@ -18,7 +18,6 @@ public class ProductDto {
     private String imageUrl;
     private Boolean state;
     private Date createdAt;
-    //private Long productCategoryId;
-    //private ProductCategoryDto productCategoryDto;
+    private Long productCategoryId;
 
 }

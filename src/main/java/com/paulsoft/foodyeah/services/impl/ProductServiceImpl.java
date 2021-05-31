@@ -34,25 +34,21 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDto> getProducts() throws ResourceException {
-        return productRepository.findAll()
-                .stream().map(this::convertToResource).collect(Collectors.toList());
+        return convertToResources(productRepository.findAll());
     }
 
     @Override
     public List<ProductDto> getProductsByState(Boolean state) throws ResourceException {
-        return productRepository.findAllByState(state)
-                .stream().map(this::convertToResource).collect(Collectors.toList());
+        return convertToResources(productRepository.findAllByState(state));
     }
     @Override
     public List<ProductDto> getProductsByCategoryId(Long categoryId) throws ResourceException{
-        return productRepository.findAllByProductCategoryId(categoryId)
-                .stream().map(this::convertToResource).collect(Collectors.toList());
+        return convertToResources(productRepository.findAllByProductCategoryId(categoryId));
     }
 
     @Override
     public List<ProductDto> getProductsBySellDay(byte sellDay) throws ResourceException {
-        return productRepository.findAllBySellDay(sellDay)
-                .stream().map(this::convertToResource).collect(Collectors.toList());
+        return convertToResources(productRepository.findAllBySellDay(sellDay));
     }
 
     @Override
@@ -70,15 +66,21 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public ProductDto createProduct(CreateProductDto createProductDto) throws ResourceException, ParseException {
-        Product product = convertToEntity(createProductDto);
         if(productRepository.findByName(createProductDto.getName()).isPresent()){
             throw new NotFoundException("PRODUCT_EXISTS","PRODUCT_EXISTS");
         }
-        product.setState(true);
+        Product product = new Product();
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date date = formatter.parse(formatter.format(new Date()));
+
         product.setCreatedAt(date);
-        product.setProductCategory(productCategoryRepository.findById(createProductDto.getProductCategoryId()).orElseThrow(()-> new NotFoundException("aea","aea")));
+        product.setProductCategory(productCategoryRepository.findById(createProductDto.getProductCategoryId())
+                .orElseThrow(()-> new NotFoundException("NOT_FOUND","NOT_FOUND")));
+        product.setName(createProductDto.getName());
+        product.setProductPrice(createProductDto.getProductPrice());
+        product.setSellDay(createProductDto.getSellDay());
+        product.setImageUrl(createProductDto.getImageUrl());
+        product.setState(true);
         return convertToResource(productRepository.save(product));
     }
 
@@ -97,7 +99,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
+    private Product getProductEntity(Long id) throws ResourceException {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("NOT_FOUND","NOT_FOUND"));
+    }
+    private List<ProductDto> convertToResources(List<Product> products) {
+        return products.stream().map(x -> modelMapper.map(x, ProductDto.class)).collect(Collectors.toList());
+    }
     private Product convertToEntity(CreateProductDto resource){return  modelMapper.map(resource, Product.class);}
-
     private ProductDto convertToResource(Product entity){return  modelMapper.map(entity,ProductDto.class);}
 }

@@ -1,6 +1,8 @@
 package com.paulsoft.foodyeah.services.impl;
 
 import com.paulsoft.foodyeah.dtos.CustomerDto.UpdateCustomerDto;
+import com.paulsoft.foodyeah.dtos.ProductDto.ProductDto;
+import com.paulsoft.foodyeah.entities.Product;
 import com.paulsoft.foodyeah.exceptions.NotFoundException;
 import com.paulsoft.foodyeah.exceptions.ResourceException;
 import com.paulsoft.foodyeah.dtos.CustomerDto.CreateCustomerDto;
@@ -41,14 +43,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<CustomerDto> getCustomersByState(Boolean state) throws ResourceException {
-        return customerRepository.findAllByState(state)
-                .stream().map(this::convertToResource).collect(Collectors.toList());
+        return convertToResources(customerRepository.findAllByState(state));
     }
 
     @Override
     public List<CustomerDto> getCustomers() throws ResourceException {
-        return customerRepository.findAll()
-                .stream().map(this::convertToResource).collect(Collectors.toList());
+        return convertToResources(customerRepository.findAll());
     }
 
     @Override
@@ -84,6 +84,13 @@ public class CustomerServiceImpl implements CustomerService {
         return customer.getCode();
     }
 
+    private Customer getCustomerEntity(Long id) throws ResourceException {
+        return customerRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("NOT_FOUND","NOT_FOUND"));
+    }
+    private List<CustomerDto> convertToResources(List<Customer> customers) {
+        return customers.stream().map(x -> modelMapper.map(x, CustomerDto.class)).collect(Collectors.toList());
+    }
     private Customer convertToEntity(CreateCustomerDto resource){return  modelMapper.map(resource, Customer.class);}
 
     private CustomerDto convertToResource(Customer entity){return  modelMapper.map(entity,CustomerDto.class);}

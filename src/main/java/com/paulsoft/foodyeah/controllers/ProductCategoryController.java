@@ -22,7 +22,7 @@ public class ProductCategoryController {
     ProductCategoryService productCategoryService;
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping
+    @GetMapping()
     public ResourceResponse<List<ProductCategoryDto>> getProductCategories() throws ResourceException {
         return new ResourceResponse<>("Success", String.valueOf(HttpStatus.OK),"OK"
                     ,productCategoryService.getProductCategories());
@@ -30,12 +30,12 @@ public class ProductCategoryController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
-    public ResourceResponse<ProductCategoryDto> getCustomerById(@PathVariable("id") Long id) throws ResourceException{
+    public ResourceResponse<ProductCategoryDto> getProductCategoryById(@PathVariable("id") Long id) throws ResourceException{
         return new ResourceResponse<>("Success",String.valueOf(HttpStatus.OK),"OK",
                 productCategoryService.getProductCategoryById(id));
     }
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping
+    @PostMapping()
     public ResourceResponse<ProductCategoryDto> createProductCategory(@RequestBody @Valid CreateProductCategoryDto createProductCategoryDto) throws ResourceException, ParseException{
         return new ResourceResponse<>("Success",String.valueOf(HttpStatus.OK),"OK",
                 productCategoryService.createProductCategory(createProductCategoryDto));

@@ -1,5 +1,6 @@
 package com.paulsoft.foodyeah.dtos.ProductCategoryDto;
 
+import com.paulsoft.foodyeah.dtos.ProductDto.ProductDto;
 import com.paulsoft.foodyeah.entities.Product;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,5 +20,5 @@ public class ProductCategoryDto {
 
     private Boolean state;
 
-    private List<Product> products;
+    private List<ProductDto> products;
 }

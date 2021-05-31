@@ -1,6 +1,5 @@
 package com.paulsoft.foodyeah.dtos.OrderDetailDto;
 
-import com.paulsoft.foodyeah.dtos.ProductDto;
 import com.paulsoft.foodyeah.dtos.orderDto.OrderDto;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +13,5 @@ public class OrderDetailDto {
     private Byte quantity;
     private Double unitPrice;
     private Double totalPrice;
-    private Boolean state;
     private String unitName;
 }

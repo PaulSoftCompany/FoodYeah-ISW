@@ -20,5 +20,5 @@ public class CustomerDto {
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date createdAt;
 
-    List<Card> registeredCards;
+    //List<Card> registeredCards;
 }

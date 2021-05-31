@@ -3,6 +3,8 @@ package com.paulsoft.foodyeah.services.impl;
 import com.paulsoft.foodyeah.dtos.ProductCategoryDto.CreateProductCategoryDto;
 import com.paulsoft.foodyeah.dtos.ProductCategoryDto.ProductCategoryDto;
 import com.paulsoft.foodyeah.dtos.ProductCategoryDto.UpdateProductCategoryDto;
+import com.paulsoft.foodyeah.dtos.ProductDto.ProductDto;
+import com.paulsoft.foodyeah.entities.Product;
 import com.paulsoft.foodyeah.entities.ProductCategory;
 import com.paulsoft.foodyeah.exceptions.NotFoundException;
 import com.paulsoft.foodyeah.exceptions.ResourceException;
@@ -35,8 +37,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
     @Override
     public List<ProductCategoryDto> getProductCategories() throws ResourceException {
-        return  productCategoryRepository.findAll()
-                .stream().map(this::convertToResource).collect(Collectors.toList());
+        return convertToResources(productCategoryRepository.findAll());
     }
 
     @Override
@@ -70,7 +71,16 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
                 orElseThrow(()->new NotFoundException("NOT_FOUND","NOT_FOUND"));
         productCategory.setState(false);
         productCategoryRepository.save(productCategory);
-        return productCategory.getId().toString();
+        return productCategory.getName();
+    }
+
+
+    private ProductCategory getProductCategoryEntity(Long id) throws ResourceException {
+        return productCategoryRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("NOT_FOUND","NOT_FOUND"));
+    }
+    private List<ProductCategoryDto> convertToResources(List<ProductCategory> categories) {
+        return categories.stream().map(x -> modelMapper.map(x, ProductCategoryDto.class)).collect(Collectors.toList());
     }
 
     private ProductCategory convertToEntity(CreateProductCategoryDto resource){

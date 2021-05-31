@@ -24,8 +24,6 @@ public class OrderDetail {
     @Column(name ="total_price")
     private Double totalPrice;
 
-    private Boolean state;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id",nullable = false)
     private Order order;

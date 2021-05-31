@@ -1,7 +1,5 @@
 package com.paulsoft.foodyeah.controllers;
 
-import com.paulsoft.foodyeah.dtos.CreateCustomerDto;
-import com.paulsoft.foodyeah.dtos.CustomerDto;
 import com.paulsoft.foodyeah.dtos.OrderDetailDto.CreateOrderDetailDto;
 import com.paulsoft.foodyeah.dtos.orderDto.CreateOrderDto;
 import com.paulsoft.foodyeah.dtos.orderDto.OrderDto;
