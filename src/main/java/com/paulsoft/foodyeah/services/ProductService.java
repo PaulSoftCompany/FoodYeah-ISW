@@ -12,6 +12,7 @@ public interface ProductService {
     List<ProductDto> getProducts() throws ResourceException;
     List<ProductDto> getProductsByState(Boolean state) throws ResourceException;
     List<ProductDto> getProductsBySellDay(byte sellDay) throws ResourceException;
+    List<ProductDto> getProductsByCategoryId(Long id) throws ResourceException;
     ProductDto getProductById(Long id) throws ResourceException;
     ProductDto getProductByName(String name) throws ResourceException;
     ProductDto createProduct(CreateProductDto createProductDto) throws ResourceException, ParseException;

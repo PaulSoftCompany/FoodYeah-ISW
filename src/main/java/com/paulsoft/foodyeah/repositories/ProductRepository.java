@@ -12,4 +12,5 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     Optional<Product> findByName(String name);
     List<Product> findAllBySellDay(byte sellDay);
     List<Product> findAllByState(Boolean State);
+    List<Product> findAllByProductCategoryId(Long categoryId);
 }
