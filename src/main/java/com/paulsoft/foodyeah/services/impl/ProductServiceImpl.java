@@ -1,10 +1,12 @@
 package com.paulsoft.foodyeah.services.impl;
 
-import com.paulsoft.foodyeah.dtos.*;
-import com.paulsoft.foodyeah.entities.Customer;
+import com.paulsoft.foodyeah.dtos.ProductDto.CreateProductDto;
+import com.paulsoft.foodyeah.dtos.ProductDto.ProductDto;
+import com.paulsoft.foodyeah.dtos.ProductDto.UpdateProductDto;
 import com.paulsoft.foodyeah.entities.Product;
 import com.paulsoft.foodyeah.exceptions.NotFoundException;
 import com.paulsoft.foodyeah.exceptions.ResourceException;
+import com.paulsoft.foodyeah.repositories.ProductCategoryRepository;
 import com.paulsoft.foodyeah.repositories.ProductRepository;
 import com.paulsoft.foodyeah.services.ProductService;
 import org.modelmapper.ModelMapper;
@@ -24,6 +26,9 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private ProductCategoryRepository productCategoryRepository;
+
     public static final ModelMapper modelMapper=new ModelMapper();
 
 
@@ -36,6 +41,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductDto> getProductsByState(Boolean state) throws ResourceException {
         return productRepository.findAllByState(state)
+                .stream().map(this::convertToResource).collect(Collectors.toList());
+    }
+    @Override
+    public List<ProductDto> getProductsByCategoryId(Long categoryId) throws ResourceException{
+        return productRepository.findAllByProductCategoryId(categoryId)
                 .stream().map(this::convertToResource).collect(Collectors.toList());
     }
 
@@ -68,6 +78,7 @@ public class ProductServiceImpl implements ProductService {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date date = formatter.parse(formatter.format(new Date()));
         product.setCreatedAt(date);
+        product.setProductCategory(productCategoryRepository.findById(createProductDto.getProductCategoryId()).orElseThrow(()-> new NotFoundException("aea","aea")));
         return convertToResource(productRepository.save(product));
     }
 

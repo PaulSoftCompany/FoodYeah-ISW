@@ -22,9 +22,9 @@ public class Product {
     private Double productPrice;
 
     @Column(name ="sell_day")
-    private byte sellDay;
+    private Byte sellDay;
 
-    @Column(name = "image_url",nullable = false)
+    @Column(name = "image_url")
     private String imageUrl;
 
     private Boolean state;
@@ -37,6 +37,8 @@ public class Product {
 //    @ManyToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "product_category_id",nullable = false)
 //    private ProductCategory productCategory;
+
+    //private String productCategoryName;
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "product")
     private List<OrderDetail> orders;

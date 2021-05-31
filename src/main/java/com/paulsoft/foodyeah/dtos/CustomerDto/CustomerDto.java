@@ -1,4 +1,4 @@
-package com.paulsoft.foodyeah.dtos;
+package com.paulsoft.foodyeah.dtos.CustomerDto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.paulsoft.foodyeah.entities.Card;

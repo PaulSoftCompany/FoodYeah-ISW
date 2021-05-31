@@ -1,8 +1,8 @@
 package com.paulsoft.foodyeah.controllers;
 
-import com.paulsoft.foodyeah.dtos.CreateCustomerDto;
-import com.paulsoft.foodyeah.dtos.CustomerDto;
-import com.paulsoft.foodyeah.dtos.UpdateCustomerDto;
+import com.paulsoft.foodyeah.dtos.CustomerDto.CreateCustomerDto;
+import com.paulsoft.foodyeah.dtos.CustomerDto.CustomerDto;
+import com.paulsoft.foodyeah.dtos.CustomerDto.UpdateCustomerDto;
 import com.paulsoft.foodyeah.exceptions.ResourceException;
 import com.paulsoft.foodyeah.exceptions.responses.ResourceResponse;
 import com.paulsoft.foodyeah.services.CustomerService;
@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.websocket.server.PathParam;
 import java.text.ParseException;
 import java.util.List;
 

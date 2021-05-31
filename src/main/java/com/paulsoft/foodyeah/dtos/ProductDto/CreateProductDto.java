@@ -1,4 +1,4 @@
-package com.paulsoft.foodyeah.dtos;
+package com.paulsoft.foodyeah.dtos.ProductDto;
 
 import lombok.Getter;
 import lombok.Setter;
