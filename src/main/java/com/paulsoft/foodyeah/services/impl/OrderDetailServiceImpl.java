@@ -45,25 +45,24 @@ public class OrderDetailServiceImpl implements OrderDetailService {
                 .stream().map(this::convertToResource).collect(Collectors.toList());
     }
 
-    @Override
-    @Transactional
-    public OrderDetailDto createOrderDetailDto(CreateOrderDetailDto createOrderDetailDto, Long orderId, Long productId) throws ResourceException, ParseException {
-        OrderDetail orderDetail = convertToEntity(createOrderDetailDto);
-        Product product = productRepository.findById(productId).orElseThrow(()->new NotFoundException("NOT_FOUND","NOT_FOUND"));
-        if(orderDetailRepository.findById(orderDetail.getId()).isPresent()){
-            throw  new NotFoundException("ORDER_DETAIL_ALREADY_EXISTS","ORDER_DETAIL_ALREADY_EXISTS");
-        }
-        orderDetail.setState(true);
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = formatter.parse(formatter.format(new Date()));
-        orderDetail.setCreatedAt(date);
-        orderDetail.setUnitPrice(product.getProductPrice());
-        orderDetail.setTotalPrice(orderDetail.getUnitPrice() * orderDetail.getQuantity());
-        orderDetail.setOrder(orderRepository.findById(orderId).orElseThrow(()-> new NotFoundException("NOT_FOUND","NOT_FOUND")));
-        orderDetail.setProduct(productRepository.findById(productId).orElseThrow(()-> new NotFoundException("NOT_FOUND","NOT_FOUND")));
-
-        return convertToResource(orderDetailRepository.save(orderDetail));
-    }
+//    @Override
+//    @Transactional
+//    public OrderDetailDto createOrderDetailDto(CreateOrderDetailDto createOrderDetailDto, Long orderId, Long productId) throws ResourceException, ParseException {
+//        OrderDetail orderDetail = convertToEntity(createOrderDetailDto);
+//        Product product = productRepository.findById(productId).orElseThrow(()->new NotFoundException("NOT_FOUND","NOT_FOUND"));
+//        if(orderDetailRepository.findById(orderDetail.getId()).isPresent()){
+//            throw  new NotFoundException("ORDER_DETAIL_ALREADY_EXISTS","ORDER_DETAIL_ALREADY_EXISTS");
+//        }
+//        orderDetail.setState(true);
+//        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+//        Date date = formatter.parse(formatter.format(new Date()));
+//        orderDetail.setUnitPrice(product.getProductPrice());
+//        orderDetail.setTotalPrice(orderDetail.getUnitPrice() * orderDetail.getQuantity());
+//        orderDetail.setOrder(orderRepository.findById(orderId).orElseThrow(()-> new NotFoundException("NOT_FOUND","NOT_FOUND")));
+//        orderDetail.setProduct(productRepository.findById(productId).orElseThrow(()-> new NotFoundException("NOT_FOUND","NOT_FOUND")));
+//
+//        return convertToResource(orderDetailRepository.save(orderDetail));
+//    }
 
     @Override
     @Transactional

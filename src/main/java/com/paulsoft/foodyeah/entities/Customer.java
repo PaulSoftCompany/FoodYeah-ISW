@@ -32,7 +32,7 @@ public class Customer{
     @Column(name ="created_at")
     private Date createdAt;
 
-    @ManyToOne
-    List<Card> registeredCards;
+//    @ManyToOne
+//    List<Card> registeredCards;
 
 }

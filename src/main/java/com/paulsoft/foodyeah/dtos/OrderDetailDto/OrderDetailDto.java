@@ -1,9 +1,7 @@
 package com.paulsoft.foodyeah.dtos.OrderDetailDto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.paulsoft.foodyeah.dtos.ProductDto;
-import com.paulsoft.foodyeah.entities.Order;
-import com.paulsoft.foodyeah.entities.Product;
+import com.paulsoft.foodyeah.dtos.orderDto.OrderDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,8 +15,5 @@ public class OrderDetailDto {
     private Double unitPrice;
     private Double totalPrice;
     private Boolean state;
-    private Date createdAt;
-
-    private Long orderId;
-    private ProductDto productDto;
+    private String unitName;
 }

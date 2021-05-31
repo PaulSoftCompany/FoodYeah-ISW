@@ -32,9 +32,11 @@ public class Product {
     @Column(name ="created_at")
     private Date createdAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_category_id",nullable = false)
-    private ProductCategory productCategory;
+    //private String[] ingredients;
+
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "product_category_id",nullable = false)
+//    private ProductCategory productCategory;
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "product")
     private List<OrderDetail> orders;

@@ -9,7 +9,5 @@ import lombok.Setter;
 @Setter
 public class CreateOrderDetailDto {
     private Byte quantity;
-
-    private Long orderId;
     private Long productId;
 }

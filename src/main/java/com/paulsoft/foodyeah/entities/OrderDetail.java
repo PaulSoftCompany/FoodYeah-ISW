@@ -18,13 +18,13 @@ public class OrderDetail {
     @Column(name ="unit_price")
     private Double unitPrice;
 
+    @Column(name = "unit_name")
+    private String unitName;
+
     @Column(name ="total_price")
     private Double totalPrice;
 
     private Boolean state;
-
-    @Column(name = "created_at")
-    private Date createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "order_id",nullable = false)

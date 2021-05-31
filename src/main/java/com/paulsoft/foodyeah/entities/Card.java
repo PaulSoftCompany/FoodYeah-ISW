@@ -27,6 +27,6 @@ public class Card{
     @Column(name = "expire_date")
     private Date expireDate;
 
-    @ManyToMany(mappedBy = "registeredCards")
-    List<Customer> customers;
+//    @ManyToMany(mappedBy = "registeredCards")
+//    List<Customer> customers;
 }

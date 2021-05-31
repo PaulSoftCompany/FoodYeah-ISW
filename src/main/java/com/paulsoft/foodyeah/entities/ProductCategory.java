@@ -22,6 +22,6 @@ public class ProductCategory {
 
     private Boolean state;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "productCategory")
-    private List<Product> products;
+//    @OneToMany(fetch = FetchType.LAZY,mappedBy = "productCategory")
+//    private List<Product> products;
 }

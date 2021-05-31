@@ -7,9 +7,8 @@ import lombok.Setter;
 @Setter
 public class CreateProductDto {
     private String name;
-    private Double productPrice;
+    private Double unitPrice;
     private byte sellDay;
     private String imageUrl;
-    private String[] ingredients;
-    private Long productCategoryId;
+    //private Long productCategoryId;
 }

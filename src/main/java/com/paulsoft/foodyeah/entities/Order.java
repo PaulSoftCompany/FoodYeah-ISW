@@ -20,7 +20,7 @@ public class Order{
     private Double totalPrice;
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "order")
-    private List<OrderDetail> products;
+    private List<OrderDetail> details;
 
 
 }
