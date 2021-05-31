@@ -52,7 +52,7 @@ public class ProductController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping("category={category_id}")
+    @GetMapping("?category={category_id}")
     public ResourceResponse<List<ProductDto>> getProductsByCategoryId(@PathVariable("category_id") Long category_id) throws ResourceException{
         return new ResourceResponse<>("Success",String.valueOf(HttpStatus.OK),"OK",
                 productService.getProductsByCategoryId(category_id));
