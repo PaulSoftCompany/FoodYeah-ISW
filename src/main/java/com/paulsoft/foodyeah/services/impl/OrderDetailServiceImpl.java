@@ -5,9 +5,12 @@ import com.paulsoft.foodyeah.dtos.OrderDetailDto.OrderDetailDto;
 import com.paulsoft.foodyeah.dtos.OrderDetailDto.UpdateOrderDetailDto;
 import com.paulsoft.foodyeah.entities.Order;
 import com.paulsoft.foodyeah.entities.OrderDetail;
+import com.paulsoft.foodyeah.entities.Product;
 import com.paulsoft.foodyeah.exceptions.NotFoundException;
 import com.paulsoft.foodyeah.exceptions.ResourceException;
 import com.paulsoft.foodyeah.repositories.OrderDetailRepository;
+import com.paulsoft.foodyeah.repositories.OrderRepository;
+import com.paulsoft.foodyeah.repositories.ProductRepository;
 import com.paulsoft.foodyeah.services.OrderDetailService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,8 @@ import java.util.stream.Collectors;
 public class OrderDetailServiceImpl implements OrderDetailService {
     @Autowired
     private OrderDetailRepository orderDetailRepository;
+    private OrderRepository orderRepository;
+    private ProductRepository productRepository;
 
     public static final ModelMapper modelMapper = new ModelMapper();
 
@@ -42,8 +47,9 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
     @Override
     @Transactional
-    public OrderDetailDto createOrderDetailDto(CreateOrderDetailDto createOrderDetailDto) throws ResourceException, ParseException {
+    public OrderDetailDto createOrderDetailDto(CreateOrderDetailDto createOrderDetailDto, Long orderId, Long productId) throws ResourceException, ParseException {
         OrderDetail orderDetail = convertToEntity(createOrderDetailDto);
+        Product product = productRepository.findById(productId).orElseThrow(()->new NotFoundException("NOT_FOUND","NOT_FOUND"));
         if(orderDetailRepository.findById(orderDetail.getId()).isPresent()){
             throw  new NotFoundException("ORDER_DETAIL_ALREADY_EXISTS","ORDER_DETAIL_ALREADY_EXISTS");
         }
@@ -51,6 +57,11 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date date = formatter.parse(formatter.format(new Date()));
         orderDetail.setCreatedAt(date);
+        orderDetail.setUnitPrice(product.getProductPrice());
+        orderDetail.setTotalPrice(orderDetail.getUnitPrice() * orderDetail.getQuantity());
+        orderDetail.setOrder(orderRepository.findById(orderId).orElseThrow(()-> new NotFoundException("NOT_FOUND","NOT_FOUND")));
+        orderDetail.setProduct(productRepository.findById(productId).orElseThrow(()-> new NotFoundException("NOT_FOUND","NOT_FOUND")));
+
         return convertToResource(orderDetailRepository.save(orderDetail));
     }
 
@@ -59,9 +70,8 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     public OrderDetailDto updateOrderDetailDto(UpdateOrderDetailDto updateOrderDetailDto, Long id) throws ResourceException {
         OrderDetail orderDetail = orderDetailRepository.findById(id)
                 .orElseThrow(()-> new NotFoundException("NOT_FOUND","NOT_FOUND"));
-        orderDetail.setProduct(updateOrderDetailDto.getProduct());
         orderDetail.setQuantity(updateOrderDetailDto.getQuantity());
-        orderDetail.setOrder(updateOrderDetailDto.getOrder());
+        orderDetail.setTotalPrice(orderDetail.getQuantity() * orderDetail.getUnitPrice());
         return convertToResource(orderDetailRepository.save(orderDetail));
     }
 

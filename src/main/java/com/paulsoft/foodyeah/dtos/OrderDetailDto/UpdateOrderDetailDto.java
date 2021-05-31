@@ -8,10 +8,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UpdateOrderDetailDto {
-
-    private Boolean state;
-    private Order order;
-    private Product product;
     private Byte quantity;
-
 }

@@ -12,7 +12,7 @@ import java.util.List;
 public interface OrderDetailService {
     OrderDetailDto getOrderDetailById(Long id) throws ResourceException;
     List<OrderDetailDto> getOrderDetails() throws ResourceException;
-    OrderDetailDto createOrderDetailDto(CreateOrderDetailDto createOrderDetailDto) throws ResourceException, ParseException;
+    OrderDetailDto createOrderDetailDto(CreateOrderDetailDto createOrderDetailDto, Long orderId, Long productId) throws ResourceException, ParseException;
     OrderDetailDto updateOrderDetailDto(UpdateOrderDetailDto updateOrderDetailDto, Long id) throws ResourceException;
     String deleteOrderDetailDto(Long id) throws ResourceException;
 }

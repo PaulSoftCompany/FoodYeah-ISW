@@ -13,9 +13,11 @@ import java.util.Date;
 public class OrderDetailDto {
     private Long id;
     private Byte quantity;
+    private Double unitPrice;
+    private Double totalPrice;
     private Boolean state;
     private Date createdAt;
 
-    private Order order;
-    private Product product;
+    private Long orderId;
+    private Long productId;
 }
