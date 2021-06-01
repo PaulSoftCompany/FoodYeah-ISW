@@ -17,10 +17,7 @@ import com.paulsoft.foodyeah.entities.*;
 import com.paulsoft.foodyeah.exceptions.InternalServerErrorException;
 import com.paulsoft.foodyeah.exceptions.NotFoundException;
 import com.paulsoft.foodyeah.exceptions.ResourceException;
-import com.paulsoft.foodyeah.repositories.CustomerRepository;
-import com.paulsoft.foodyeah.repositories.OrderDetailRepository;
-import com.paulsoft.foodyeah.repositories.OrderRepository;
-import com.paulsoft.foodyeah.repositories.ProductRepository;
+import com.paulsoft.foodyeah.repositories.*;
 import com.paulsoft.foodyeah.services.OrderService;
 
 import org.modelmapper.ModelMapper;
@@ -107,8 +104,8 @@ public class OrderServiceImpl implements OrderService {
         cardRepository.save(card);
     }
 
-    private Product getOrderEntity(Long id) throws ResourceException {
-        return productRepository.findById(id)
+    private Order getOrderEntity(Long id) throws ResourceException {
+        return orderRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("NOT_FOUND","NOT_FOUND"));
     }
 
