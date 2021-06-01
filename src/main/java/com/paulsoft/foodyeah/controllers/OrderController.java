@@ -35,4 +35,14 @@ public class OrderController {
         return new ResourceResponse<>("Success",String.valueOf(HttpStatus.OK),"OK",
                 orderService.createOrder(createOrderDto));
     }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/{orderId}/payment/{cardId}")
+    public ResourceResponse<String> payment(@PathVariable("orderId") Long orderId, @PathVariable("cardId") Long cardId) throws ResourceException{
+        return new ResourceResponse<>("Success",String.valueOf(HttpStatus.OK),"OK",
+                String.format("Order %d paid",orderId));
+
+    }
+
+
 }

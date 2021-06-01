@@ -55,14 +55,6 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         return convertToResource(orderDetailRepository.save(orderDetail));
     }
 
-//    @Override
-//    public String deleteOrderDetailDto(Long id) throws ResourceException {
-//        OrderDetail orderDetail = orderDetailRepository.findById(id)
-//                .orElseThrow(()-> new NotFoundException("NOT_FOUND","NOT_FOUND"));
-//        orderDetail.setState(false);
-//        orderDetailRepository.save(orderDetail);
-//        return orderDetail.getState().toString();
-//    }
     private OrderDetail convertToEntity(CreateOrderDetailDto resource){
         return modelMapper.map(resource,OrderDetail.class);
     }

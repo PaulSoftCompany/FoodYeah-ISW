@@ -27,6 +27,12 @@ public class Card{
     @Column(name = "expire_date")
     private Date expireDate;
 
-//    @ManyToMany(mappedBy = "registeredCards")
-//    List<Customer> customers;
+    private Boolean state;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id",nullable = false)
+    private Customer customer;
+
+    @Column(name = "card_money")
+    private Double cardMoney;
 }

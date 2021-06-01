@@ -13,6 +13,8 @@ import com.paulsoft.foodyeah.entities.Customer;
 import com.paulsoft.foodyeah.entities.Order;
 import com.paulsoft.foodyeah.entities.OrderDetail;
 import com.paulsoft.foodyeah.entities.Product;
+import com.paulsoft.foodyeah.entities.*;
+import com.paulsoft.foodyeah.exceptions.InternalServerErrorException;
 import com.paulsoft.foodyeah.exceptions.NotFoundException;
 import com.paulsoft.foodyeah.exceptions.ResourceException;
 import com.paulsoft.foodyeah.repositories.CustomerRepository;
@@ -41,7 +43,10 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private ProductRepository productRepository;
 
-    public static final ModelMapper modelMapper = new ModelMapper();
+    @Autowired
+    private CardRepository cardRepository;
+
+    public static final ModelMapper modelMapper=new ModelMapper();
 
     @Override
     public List<OrderDto> getOrders() throws ResourceException {
@@ -89,8 +94,22 @@ public class OrderServiceImpl implements OrderService {
         return convertToResource(orderRepository.save(order));
     }
 
-    private Order getOrderEntity(Long id) throws ResourceException {
-        return orderRepository.findById(id).orElseThrow(() -> new NotFoundException("NOT_FOUND", "NOT_FOUND"));
+    @Transactional
+    public void decreaseMoney(Long orderId, Long cardId) throws ResourceException{
+        Card card = cardRepository.findById(cardId)
+                .orElseThrow(()->new NotFoundException("NOT_FOUND","NOT_FOUND"));
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(()->new NotFoundException("NOT_FOUND","NOT_FOUND"));
+        if(order.getTotalPrice() > card.getCardMoney()) {
+            throw new InternalServerErrorException("NOT ENOUGH MONEY", "NOT ENOUGH MONEY");
+        }
+        card.setCardMoney(card.getCardMoney()-order.getTotalPrice());
+        cardRepository.save(card);
+    }
+
+    private Product getOrderEntity(Long id) throws ResourceException {
+        return productRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("NOT_FOUND","NOT_FOUND"));
     }
 
     private List<OrderDto> convertToResources(List<Order> orders) {

@@ -32,8 +32,8 @@ public class Customer{
     @Column(name ="created_at")
     private Date createdAt;
 
-//    @ManyToOne
-//    List<Card> registeredCards;
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "customer")
+    private List<Card> cards;
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "customer")
     private List<Order> orders;
