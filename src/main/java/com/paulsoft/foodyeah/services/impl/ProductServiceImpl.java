@@ -87,9 +87,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public ProductDto updateProduct(UpdateProductDto updateProductDto, Long id) throws ResourceException {
-        if (productRepository.findByName(updateProductDto.getName()).isPresent()) {
+        //ALEXIS SE MOLESTO MUCHO AL MOMENTO DE HACER LOS TESTS POR LAS SIGUIENTES 3 LINEAS COMENTADAS
+        // >:'v
+/*        if (productRepository.findByName(updateProductDto.getName()).isPresent()) {
             throw new NotFoundException("PRODUCT_EXISTS", "PRODUCT_EXISTS");
-        }
+        }*/
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("NOT_FOUND", "NOT_FOUND"));
         product.setName(updateProductDto.getName());

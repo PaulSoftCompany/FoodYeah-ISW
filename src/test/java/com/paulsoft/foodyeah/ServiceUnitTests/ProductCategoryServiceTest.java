@@ -230,9 +230,6 @@ class ProductCategoryServiceTest {
         Util.assertEquals("PRODUCT DATE",entity.getProducts().get(0).getCreatedAt(),mapped.getProducts().get(0).getCreatedAt());
         Util.assertEquals("PRODUCT PRODUCT CATEGORY ID",entity.getProducts().get(0).getProductCategoryId(),mapped.getProducts().get(0).getProductCategoryId());
     }
-    private ProductCategory convertToEntity(CreateProductCategoryDto resource){
-        return modelMapper.map(resource,ProductCategory.class);
-    }
     private CreateProductCategoryDto convertToCreateResource(ProductCategory entity){
         return modelMapper.map(entity,CreateProductCategoryDto.class);
     }
