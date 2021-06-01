@@ -124,7 +124,7 @@ class ProductCategoryServiceTest {
         String methodName = "UPDATE PRODUCT CATEGORY";
         //Mock
         Mockito.when(repository.findById(ID)).thenReturn(Optional.of(PRODUCT_CATEGORY));
-        Mockito.when(repository.save(PRODUCT_CATEGORY)).thenReturn(PRODUCT_CATEGORY);
+        Mockito.when(repository.save(Mockito.any(ProductCategory.class))).thenReturn(PRODUCT_CATEGORY);
         UpdateProductCategoryDto toupdate =  convertToUpdateResource(PRODUCT_CATEGORY);
         ProductCategoryDto response;
         //Get response
@@ -160,7 +160,7 @@ class ProductCategoryServiceTest {
             System.out.println(methodName + " - "+Util.ANSI_GREEN+"EXCEPTION PASSED"+Util.ANSI_RESET);
         }
         Mockito.when(repository.findByName(PRODUCT_CATEGORY_NAME)).thenReturn(Optional.empty());
-        Mockito.when(repository.save(PRODUCT_CATEGORY)).thenReturn(PRODUCT_CATEGORY);
+        Mockito.when(repository.save(Mockito.any(ProductCategory.class))).thenReturn(PRODUCT_CATEGORY);
         ProductCategoryDto response;
         //Get response
         try {
@@ -181,9 +181,38 @@ class ProductCategoryServiceTest {
             throw e;//Throweamos e para que el compilador identifique el error en el test
         }
     }
-    /*
-    String deleteProductCategory(Long id) throws ResourceException;
-     */
+    @Test
+    public void deleteProductCategory() throws Exception{
+        String methodName = "DELETE PRODUCT CATEGORY";
+        //Mock
+        Mockito.when(repository.findById(ID)).thenReturn(Optional.empty());
+        Mockito.when(repository.save(Mockito.any(ProductCategory.class))).thenReturn(PRODUCT_CATEGORY);
+        String response;
+        try{
+            service.deleteProductCategory(ID);
+        }catch (NotFoundException e){
+            System.out.println(methodName + " - "+Util.ANSI_GREEN+"EXCEPTION PASSED"+Util.ANSI_RESET);
+        }
+        Mockito.when(repository.findById(ID)).thenReturn(Optional.of(PRODUCT_CATEGORY));
+        try {
+            response = service.deleteProductCategory(ID);
+        }catch(ResourceException e){
+            System.out.println(Util.ANSI_RED+"SERVICE ERROR"+Util.ANSI_RESET);
+            return; //Rompemos la funcion
+            //No podemos validar si no tenemos un response.
+        }
+        //Assertions:
+        try {
+            Util.assertNotNull("RESPONSE NOT NULL",response);
+            Util.assertEquals("GET NAME",response, PRODUCT_CATEGORY_NAME);
+            Util.assertEquals("GET STATE",PRODUCT_CATEGORY.getState(), STATE_DELETED);
+            System.out.println(methodName + " - "+Util.ANSI_GREEN+"TESTS PASSED"+Util.ANSI_RESET);
+        }catch(AssertionError e){
+            System.out.println(methodName +" - "+Util.ANSI_RED+"TESTS FAILED"+Util.ANSI_RESET);
+            throw e;//Throweamos e para que el compilador identifique el error en el test
+        }
+    }
+
     private void validateProductCategory(ProductCategoryDto entity, ProductCategoryDto mapped) throws AssertionError{
         Util.assertNotNull("PRODUCT CATEGORY NOT NULL",entity);
         Util.assertEquals("PRODUCT CATEGORY ID",entity.getId(),mapped.getId());
