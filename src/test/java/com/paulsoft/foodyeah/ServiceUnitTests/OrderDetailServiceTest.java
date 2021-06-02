@@ -155,13 +155,6 @@ public class OrderDetailServiceTest {
     private UpdateOrderDetailDto convertToUpdateResource(OrderDetail entity){
         return modelMapper.map(entity,UpdateOrderDetailDto.class);
     }
-    private CreateOrderDetailDto convertToCreateResource(OrderDetail entity){
-        return modelMapper.map(entity,CreateOrderDetailDto.class);
-    }
-    private OrderDetail convertToEntity(CreateProductDto resource) {
-        return modelMapper.map(resource, OrderDetail.class);
-    }
-
     private OrderDetailDto convertToResource(OrderDetail entity) {
         return modelMapper.map(entity, OrderDetailDto.class);
     }

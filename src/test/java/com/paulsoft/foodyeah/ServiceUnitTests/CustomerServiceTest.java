@@ -143,7 +143,7 @@ class CustomerServiceTest {
 
     @Test
     public void getCustomers() throws Exception{
-        String methodName = "GET CUSTOMER BY STATE";
+        String methodName = "GET CUSTOMERS";
         //Mock
         Mockito.when(repository.findAll()).thenReturn(Arrays.asList(CUSTOMER));
         List<CustomerDto> response;

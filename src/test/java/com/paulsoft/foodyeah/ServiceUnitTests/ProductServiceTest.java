@@ -356,15 +356,6 @@ class ProductServiceTest {
         Util.assertEquals("PRODUCT IMAGEURL",entity.getImageUrl(),mapped.getImageUrl());
         Util.assertEquals("PRODUCT STATE",entity.getState(),mapped.getState());
         Util.assertEquals("PRODUCT CREATED AT",entity.getCreatedAt(),mapped.getCreatedAt());
-        /*Util.assertNotNull("PRODUCTS NOT NULL", entity.getProducts());
-        Util.assertEquals("PRODUCT ID",entity.getProducts().get(0).getId(),mapped.getProducts().get(0).getId());
-        Util.assertEquals("PRODUCT NAME",entity.getProducts().get(0).getName(),mapped.getProducts().get(0).getName());
-        Util.assertEquals("PRODUCT PRICE",entity.getProducts().get(0).getProductPrice(),mapped.getProducts().get(0).getProductPrice());
-        Util.assertEquals("PRODUCT SELLDAY",entity.getProducts().get(0).getSellDay(),mapped.getProducts().get(0).getSellDay());
-        Util.assertEquals("PRODUCT IMAGEURL",entity.getProducts().get(0).getImageUrl(),mapped.getProducts().get(0).getImageUrl());
-        Util.assertEquals("PRODUCT STATE",entity.getProducts().get(0).getState(),mapped.getProducts().get(0).getState());
-        Util.assertEquals("PRODUCT DATE",entity.getProducts().get(0).getCreatedAt(),mapped.getProducts().get(0).getCreatedAt());
-        Util.assertEquals("PRODUCT PRODUCT CATEGORY ID",entity.getProducts().get(0).getProductCategoryId(),mapped.getProducts().get(0).getProductCategoryId());*/
     }
     private UpdateProductDto convertToUpdateResource(Product entity){
         return modelMapper.map(entity,UpdateProductDto.class);
