@@ -205,7 +205,7 @@ class CustomerServiceTest {
 
     @Test
     public void updateCustomer() throws Exception{
-        String methodName = "UPDATE PRODUCT CATEGORY";
+        String methodName = "UPDATE CUSTOMER";
         Mockito.when(repository.findById(CUSTOMER_ID)).thenReturn(Optional.empty());
         //Map entities:
         UpdateCustomerDto toupdate =  convertToUpdateResource(CUSTOMER);
